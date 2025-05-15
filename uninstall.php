@@ -82,7 +82,15 @@ class wpcable_uninstall {
 			$prefix . 'balance',
 			$prefix . 'average',
 			$prefix . 'what_to_check',
-			$prefix . 'transactions_version'
+			$prefix . 'transcactions_version',
+			$prefix . 'transactions_version',
+			$prefix . 'auth_token',
+			$prefix . 'cancel_after_days',
+			$prefix . 'email',
+			$prefix . 'fee_type',
+			$prefix . 'last_fetch',
+			$prefix . 'rate',
+			$prefix . 'tasks_stop_at_page ',
 		);
 
 		foreach( $options as $option ) {
@@ -106,6 +114,7 @@ class wpcable_uninstall {
 			$prefix . 'codeable_transactions',
 			$prefix . 'codeable_amounts',
 			$prefix . 'codeable_clients',
+			$prefix . 'codeable_tasks',
 		);
 
 		$wpdb->query( 'DROP TABLE IF EXISTS ' . implode( ',', $tables ) );
