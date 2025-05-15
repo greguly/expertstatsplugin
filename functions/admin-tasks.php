@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function wpcable_tasks_menu() {
 	add_submenu_page(
-		'codeable_transcactions_stats',
+		'codeable_transactions_stats',
 		'Tasks',
 		'Tasks',
 		'manage_options',

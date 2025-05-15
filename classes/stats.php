@@ -18,7 +18,7 @@ class wpcable_stats {
 		global $wpdb;
 
 		$this->tables = array(
-			'transcactions' => $wpdb->prefix . 'codeable_transcactions',
+			'transactions' => $wpdb->prefix . 'codeable_transactions',
 			'clients'       => $wpdb->prefix . 'codeable_clients',
 			'amounts'       => $wpdb->prefix . 'codeable_amounts',
 		);
@@ -38,9 +38,9 @@ class wpcable_stats {
 			SUM(debit_user_amount) as total_cost,
 			count(1) as tasks
 		  FROM
-			' . $this->tables['transcactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
+			' . $this->tables['transactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
 		  ON
-			' . $this->tables['transcactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
+			' . $this->tables['transactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
 		  WHERE
 				`description` = 'task_completion'
 			AND (dateadded BETWEEN '" . $first_date . "' AND '" . $last_date . "')
@@ -69,9 +69,9 @@ class wpcable_stats {
 			debit_user_amount as total_cost,
 			dateadded
 		  FROM
-			' . $this->tables['transcactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
+			' . $this->tables['transactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
 		  ON
-			' . $this->tables['transcactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
+			' . $this->tables['transactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
 		  WHERE
 				`description` = 'task_completion'
 			AND (dateadded BETWEEN '" . $first_date . "' AND '" . $last_date . "')
@@ -118,9 +118,9 @@ class wpcable_stats {
 			AVG(credit_revenue_amount) as revenue,
 			AVG(debit_user_amount) as total_cost
 		  FROM
-			' . $this->tables['transcactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
+			' . $this->tables['transactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
 		  ON
-			' . $this->tables['transcactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
+			' . $this->tables['transactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
 		  WHERE
 				`description` = 'task_completion'
 			AND (dateadded BETWEEN '" . $first_date . "' AND '" . $last_date . "')
@@ -216,12 +216,12 @@ class wpcable_stats {
 			  SELECT
 				*
 			  FROM
-				' . $this->tables['transcactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
+				' . $this->tables['transactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
 			  ON
-				' . $this->tables['transcactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
+				' . $this->tables['transactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
 			  WHERE
 					`description` = 'task_completion'
-			  ORDER BY " . $this->tables['transcactions'] . '.id ASC
+			  ORDER BY " . $this->tables['transactions'] . '.id ASC
 			  LIMIT 0,1
 			';
 
@@ -238,12 +238,12 @@ class wpcable_stats {
 		  SELECT
 			*
 		  FROM
-			' . $this->tables['transcactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
+			' . $this->tables['transactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
 		  ON
-			' . $this->tables['transcactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
+			' . $this->tables['transactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
 		  WHERE
 				`description` = 'task_completion'
-		  ORDER BY " . $this->tables['transcactions'] . '.id DESC
+		  ORDER BY " . $this->tables['transactions'] . '.id DESC
 		  LIMIT 0,1
 		';
 
@@ -270,9 +270,9 @@ class wpcable_stats {
 		  SELECT
 			credit_revenue_amount
 		  FROM
-			' . $this->tables['transcactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
+			' . $this->tables['transactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
 		  ON
-			' . $this->tables['transcactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
+			' . $this->tables['transactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
 		  WHERE
 				`description` = 'task_completion'
 			AND (dateadded BETWEEN '" . $first_date . "' AND '" . $last_date . "')
@@ -318,7 +318,7 @@ class wpcable_stats {
 		  SELECT
 			DATE_FORMAT(dateadded,'%Y-%m') as dateadded, count(1) as tasks_per_month
 		  FROM
-			" . $this->tables['transcactions'] . "
+			" . $this->tables['transactions'] . "
 		  WHERE
 				`description` = 'task_completion'
 			AND (dateadded BETWEEN '" . $first_date . "' AND '" . $last_date . "')
@@ -349,9 +349,9 @@ class wpcable_stats {
 		  SUM(credit_revenue_amount) as revenue,
 		  SUM(credit_fee_amount) as fee
 		  FROM
-			' . $this->tables['transcactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
+			' . $this->tables['transactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
 		  ON
-			' . $this->tables['transcactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
+			' . $this->tables['transactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
 		  WHERE
 				`description` = 'task_completion'
 			AND (dateadded BETWEEN '" . $first_date . "' AND '" . $last_date . "')
@@ -391,9 +391,9 @@ class wpcable_stats {
 		  SUM(credit_revenue_amount) as revenue,
 		  SUM(credit_fee_amount) as fee
 		  FROM
-			' . $this->tables['transcactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
+			' . $this->tables['transactions'] . ' LEFT JOIN ' . $this->tables['amounts'] . '
 		  ON
-			' . $this->tables['transcactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
+			' . $this->tables['transactions'] . '.task_id = ' . $this->tables['amounts'] . ".task_id
 		  WHERE
 				`description` = 'task_completion'
 		  AND (preferred = 1 OR preferred = 0)

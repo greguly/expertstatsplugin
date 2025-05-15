@@ -227,7 +227,7 @@ function codeable_flush_all_data() {
 	global $wpdb;
 
 	$tables = [
-		$wpdb->prefix . 'codeable_transcactions' => __( 'Transcactions', 'wpcable' ),
+		$wpdb->prefix . 'codeable_transactions' => __( 'transactions', 'wpcable' ),
 		$wpdb->prefix . 'codeable_clients'       => __( 'Clients', 'wpcable' ),
 		$wpdb->prefix . 'codeable_amounts'       => __( 'Amounts', 'wpcable' ),
 		$wpdb->prefix . 'codeable_tasks'         => __( 'Tasks', 'wpcable' ),

@@ -17,7 +17,7 @@ class wpcable_clients {
 		global $wpdb;
 
 		$this->tables = array(
-			'transactions' => $wpdb->prefix . 'codeable_transcactions',
+			'transactions' => $wpdb->prefix . 'codeable_transactions',
 			'clients'      => $wpdb->prefix . 'codeable_clients',
 			'amounts'      => $wpdb->prefix . 'codeable_amounts',
 		);

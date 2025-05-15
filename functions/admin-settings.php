@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function wpcable_options() {
 	add_submenu_page(
-		'codeable_transcactions_stats',
+		'codeable_transactions_stats',
 		'Estimate',
 		'Estimate',
 		'manage_options',
@@ -23,7 +23,7 @@ function wpcable_options() {
 		'codeable_estimate_callback'
 	);
 	add_submenu_page(
-		'codeable_transcactions_stats',
+		'codeable_transactions_stats',
 		'Settings',
 		'Settings',
 		'manage_options',

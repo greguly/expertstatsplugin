@@ -15,15 +15,15 @@ function wpcable_register_menu_page() {
 		__( 'Codeable Stats', 'wpcable' ),
 		__( 'Codeable Stats', 'wpcable' ),
 		'manage_options',
-		'codeable_transcactions_stats',
-		'codeable_transcactions_stats_cb',
+		'codeable_transactions_stats',
+		'codeable_transactions_stats_cb',
 		'data:image/svg+xml;base64,' . base64_encode( $icon_code ),
 		2
 	);
 }
 add_action( 'admin_menu', 'wpcable_register_menu_page' );
 
-function codeable_transcactions_stats_cb() {
+function codeable_transactions_stats_cb() {
 
 	codeable_page_requires_login( __( 'Codeable Stats', 'wpcable' ) );
 	codeable_maybe_refresh_data();
@@ -307,7 +307,7 @@ function codeable_transcactions_stats_cb() {
 		<div class="flex-row box date-filters">
 			<form method="get" id="date_form" data-start-year="<?php echo $first_year; ?>"
 				  data-end-year="<?php echo $last_year; ?>">
-				<input type="hidden" name="page" value="codeable_transcactions_stats"/>
+				<input type="hidden" name="page" value="codeable_transactions_stats"/>
 
 				<div class="section">
 				  <img class="compareicon" src="<?php echo esc_url( plugins_url( 'assets/images/calendar-add.svg', dirname( __FILE__ ) ) ); ?>" width="16" height="16" alt="<?php echo __( 'compare dates', 'wpcable' ); ?>" title="<?php echo __( 'compare dates', 'wpcable' ); ?>">

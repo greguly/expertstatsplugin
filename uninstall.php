@@ -82,7 +82,7 @@ class wpcable_uninstall {
 			$prefix . 'balance',
 			$prefix . 'average',
 			$prefix . 'what_to_check',
-			$prefix . 'transcactions_version'
+			$prefix . 'transactions_version'
 		);
 
 		foreach( $options as $option ) {
@@ -103,6 +103,7 @@ class wpcable_uninstall {
 
 		$tables = array(
 			$prefix . 'codeable_transcactions',
+			$prefix . 'codeable_transactions',
 			$prefix . 'codeable_amounts',
 			$prefix . 'codeable_clients',
 		);

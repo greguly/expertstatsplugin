@@ -5,9 +5,9 @@
  * Plugin Name:       Codeable - Expert's Stats
  * Plugin URI:        https://github.com/codeablehq/blackbook/wiki/Expert-Stats-Plugin
  * Description:       Get your Codeable data
- * Version:           0.3.1
+ * Version:           0.3.2
  * Author:            Spyros Vlachopoulos
- * Contributors:      Panagiotis Synetos, John Leskas, Justin Frydman, Jonathan Bossenger, Rob Scott, Philipp Stracker, Peter Kakoma
+ * Contributors:      Panagiotis Synetos, John Leskas, Justin Frydman, Jonathan Bossenger, Rob Scott, Philipp Stracker, Peter Kakoma, Gabriel Reguly
  * Author URI:        https://codeable.io/developers/spyros-vlachopoulos/
  * License:           GPL2
  * Text Domain:       wpcable
@@ -130,15 +130,15 @@ add_action( 'wp_ajax_wpcable_sync_process', 'wpcable_sync_process' );
 function wpcable_install() {
 	global $wpdb;
 
-	$wpcable_db_version = '0.0.3';
+	$wpcable_db_version = '0.0.3.1';
 
-	if ( get_option( 'wpcable_transcactions_version' ) !== $wpcable_db_version ) {
+	if ( get_option( 'wpcable_transactions_version' ) !== $wpcable_db_version ) {
 
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 
 		$charset_collate = $wpdb->get_charset_collate();
 
-		$table_name = $wpdb->prefix . 'codeable_transcactions';
+		$table_name = $wpdb->prefix . 'codeable_transactions';
 
 		$sql = "CREATE TABLE {$table_name} (
 			`id` int(11) NOT NULL,
@@ -226,7 +226,7 @@ function wpcable_install() {
 
 		$db_delta = dbDelta( $sql );
 
-		update_option( 'wpcable_transcactions_version', $wpcable_db_version );
+		update_option( 'wpcable_transactions_version', $wpcable_db_version );
 	}
 }
 
@@ -243,7 +243,7 @@ register_deactivation_hook( __FILE__, 'wpcable_deactivate' );
 
 function wpcable_admin_scripts( $hook ) {
 	$plugin_hooks = [
-		'toplevel_page_codeable_transcactions_stats',
+		'toplevel_page_codeable_transactions_stats',
 		'codeable-stats_page_codeable_tasks',
 		'codeable-stats_page_codeable_estimate',
 		'codeable-stats_page_codeable_settings',

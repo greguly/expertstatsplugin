@@ -38,7 +38,7 @@ class wpcable_api_data {
 		global $wpdb;
 
 		$this->tables = [
-			'transcactions' => $wpdb->prefix . 'codeable_transcactions',
+			'transactions' => $wpdb->prefix . 'codeable_transactions',
 			'clients'       => $wpdb->prefix . 'codeable_clients',
 			'amounts'       => $wpdb->prefix . 'codeable_amounts',
 			'tasks'         => $wpdb->prefix . 'codeable_tasks',
@@ -241,7 +241,7 @@ class wpcable_api_data {
 				// Check if transactions already exists.
 				$check = $wpdb->get_results(
 					"SELECT COUNT(1) AS totalrows
-					FROM `{$this->tables['transcactions']}`
+					FROM `{$this->tables['transactions']}`
 					WHERE id = '{$tr['id']}';
 					"
 				);
@@ -267,13 +267,13 @@ class wpcable_api_data {
 				if ( $new_tr['id'] && is_int( $new_tr['id'] ) ) {
 					if ( $exists ) {
 						$db_res = $wpdb->update(
-							$this->tables['transcactions'],
+							$this->tables['transactions'],
 							$new_tr,
 							[ 'id' => $tr['id'] ]
 						);
 					} else {
 						$db_res = $wpdb->insert(
-							$this->tables['transcactions'],
+							$this->tables['transactions'],
 							$new_tr
 						);
 					}

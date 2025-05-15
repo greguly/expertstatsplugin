@@ -38,3 +38,7 @@
 *0.0.20 (2019-07-07)*
 * Update UI layout to match current WordPress standards
 * Apply WordPress coding standards to code
+
+*0.3.2 (2025-05-15)*
+* Fixes assignment of auth_token from API login
+* Renames typo `transcactions` to `transactions`
