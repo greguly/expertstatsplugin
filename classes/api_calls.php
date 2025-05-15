@@ -85,6 +85,11 @@ class wpcable_api_calls {
 		}
 
 		$this->set_auth_token( $login_call['auth_token'] );
+
+		$account_details = $login_call;
+		unset( $account_details['auth_token']);
+		update_option( 'wpcable_account_details', $account_details );
+
 	}
 
 	/**
@@ -241,15 +246,6 @@ class wpcable_api_calls {
 		}
 
 		$response_body = json_decode( $response['body'], true );
-		
-		if( isset( $response['headers'] ) ) {
-			
-			$full_header = $response['headers']->getAll();
-			if ( isset( $full_header['auth-token'] ) && !empty( $full_header['auth-token'] ) ) {
-				
-				$response_body['auth_token'] = $full_header['auth-token'];
-			}
-		}
 
 		if ( is_array( $response_body ) && ! empty( $response_body['errors'] ) ) {
 			if ( false !== array_search( 'Invalid login credentials', $response_body['errors'], true ) ) {
@@ -258,6 +254,12 @@ class wpcable_api_calls {
 				codeable_api_logout();
 				return false;
 			}
+		}
+
+		$data = $response['headers']->getAll();
+
+		if ( isset( $data['auth-token'] ) ) {
+			$response_body['auth_token'] = $data['auth-token'];
 		}
 
 		return $response_body;
