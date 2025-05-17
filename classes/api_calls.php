@@ -162,7 +162,7 @@ class wpcable_api_calls {
 	 * @return array
 	 */
 	public function transactions_page( $page = 1 ) {
-		$url  = 'users/me/transactions';
+		$url  = 'experts/transactions/';
 		$args = [ 'page' => $page ];
 
 		$transactions = $this->request( $url, $args, 'get' );

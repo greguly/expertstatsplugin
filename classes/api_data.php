@@ -236,12 +236,32 @@ class wpcable_api_data {
 			//update_option( 'wpcable_revenue', $single_page['revenue'] );
 		}
 
-		if ( empty( $single_page['transactions'] ) ) {
+		if ( empty( $single_page ) ) {
+
 			return false;
+
 		} else {
 
+
 			// Get all data to the DB.
-			foreach ( $single_page['transactions'] as $tr ) {
+			foreach ( $single_page as $tr ) {
+
+				if ( ! in_array( $tr['description'], array( 'ad_hoc_expert_credit', 'partial_refund', 'task_completion' ) ) ) {
+
+					/*
+						ad_hoc_expert_credit
+						ad_hoc_expert_debit
+						ad_hoc_team_work
+						contractor_withdrawal
+						expert_withdrawal_request
+						partial_refund
+						task_completion
+
+					*/
+
+					continue;
+				}
+
 
 				// Check if transactions already exists.
 				$check = $wpdb->get_results(
@@ -253,18 +273,20 @@ class wpcable_api_data {
 
 				$exists = $check[0]->totalrows > 0;
 
+				$task_id = ( $tr['resources']['sub_task']['id'] ? $tr['resources']['sub_task']['id'] : $tr['resources']['project']['id'] );
+
 				$new_tr = [
 					'id'             => $tr['id'],
 					'description'    => $tr['description'],
-					'dateadded'      => date( 'Y-m-d H:i:s', $tr['timestamp'] ),
+					'dateadded'      => $tr['created_at'],
 					'fee_percentage' => $tr['fee_percentage'],
 					'fee_amount'     => $tr['fee_amount'],
-					'task_type'      => $tr['task']['kind'],
-					'task_id'        => $tr['task']['id'],
-					'task_title'     => $tr['task']['title'],
-					'parent_task_id' => ( $tr['task']['parent_task_id'] > 0 ? $tr['task']['parent_task_id'] : 0 ),
-					'preferred'      => $tr['task']['current_user_is_preferred_contractor'],
-					'client_id'      => $tr['task_client']['id'],
+					'task_type'      => $tr['resources']['project']['kind'],
+					'task_id'        => $task_id,
+					'task_title'     => $tr['resources']['project']['title'],
+					'parent_task_id' => ( $tr['resources']['project']['parent_task_id'] > 0 ? ['resources']['project']['parent_task_id'] : 0 ),
+					'preferred'      => $tr['resources']['project']['current_user_is_preferred_contractor'],
+					'client_id'      => $tr['resources']['client']['id'],
 					'last_sync'      => time(),
 				];
 
@@ -294,10 +316,10 @@ class wpcable_api_data {
 
 				$this->store_client( $tr['task_client'] );
 				$this->store_amount(
-					$tr['task']['id'],
-					$tr['task_client']['id'],
-					$tr['credit_amounts'],
-					$tr['debit_amounts']
+					$task_id,
+					$tr['resources']['client']['id'],
+					$tr['amount'],
+					$tr['fee_amount']
 				);
 
 				// If we find a transaction that already exists, bail out and don't continue updating all the transactions
