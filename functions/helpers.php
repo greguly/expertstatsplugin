@@ -227,10 +227,10 @@ function codeable_flush_all_data() {
 	global $wpdb;
 
 	$tables = [
-		$wpdb->prefix . 'codeable_transactions' => __( 'transactions', 'wpcable' ),
-		$wpdb->prefix . 'codeable_clients'       => __( 'Clients', 'wpcable' ),
-		$wpdb->prefix . 'codeable_amounts'       => __( 'Amounts', 'wpcable' ),
-		$wpdb->prefix . 'codeable_tasks'         => __( 'Tasks', 'wpcable' ),
+		$wpdb->prefix . 'codeable_transactions' => __( 'Transactions', 'wpcable' ),
+		$wpdb->prefix . 'codeable_clients'      => __( 'Clients', 'wpcable' ),
+		$wpdb->prefix . 'codeable_amounts'      => __( 'Amounts', 'wpcable' ),
+		$wpdb->prefix . 'codeable_tasks'        => __( 'Tasks', 'wpcable' ),
 	];
 
 	$redirect_to = '';
@@ -260,12 +260,28 @@ function codeable_flush_all_data() {
 	// Flush object cache.
 	wpcable_cache::flush();
 
-	delete_option( 'wpcable_email' );
-	delete_option( 'wpcable_average' );
-	delete_option( 'wpcable_balance' );
-	delete_option( 'wpcable_revenue' );
-	delete_option( 'wpcable_last_fetch' );
-	delete_option( 'wpcable_account_details' );
+	$prefix = 'wpcable_';
+
+	$options = array(
+		$prefix . 'account_details',
+		$prefix . 'api_queue',
+		$prefix . 'auth_token',
+		$prefix . 'average',
+		$prefix . 'balance',
+		$prefix . 'cancel_after_days',
+		$prefix . 'email',
+		$prefix . 'fee_type',
+		$prefix . 'last_fetch',
+		$prefix . 'rate',
+		$prefix . 'revenue',
+		$prefix . 'tasks_stop_at_page ',
+		$prefix . 'transactions_version',
+		$prefix . 'transcactions_version',
+	);
+
+	foreach( $options as $option ) {
+		delete_option( $option );
+	}
 
 	codeable_api_logout();
 
