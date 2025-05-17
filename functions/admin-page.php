@@ -141,7 +141,7 @@ function codeable_transactions_stats_cb() {
 				<div class="column_inner">
 					<div class="maindata">
 						<div class="label"><?php echo __( 'Completed Tasks', 'wpcable' ); ?></div>
-						<div class="value"><?php echo $account_details['completed_tasks_count']; ?></div>
+						<div class="value"><?php echo intval( $account_details['completed_tasks_count'] ); ?></div>
 					</div>
 					<div class="footerdata">
 						<span class="label"><?php echo __( 'Tasks', 'wpcable' ); ?></span>:
@@ -157,6 +157,21 @@ function codeable_transactions_stats_cb() {
 								<?php _e( 'See all your tasks', 'wpcable' ); ?>
 							</a>
 						</p>
+					</div>
+					<div class="maindata">
+
+						<hr/>
+						<div class="label"><?php echo __( 'Available Claims', 'wpcable' ); ?></div>
+						<div class="value">
+							<?php echo $account_details['available_claim_count'] ?> 
+						</div>
+					</div>
+					<div class="footerdata">
+						<span class="label"><?php echo __( 'Claims', 'wpcable' ); ?></span>:
+						<span class="value">
+							<?php echo $account_details['current_claim_count'] ?> / <?php echo $account_details['max_claim_count'] ?>
+						</span>
+
 					</div>
 				</div>
 			</div>
