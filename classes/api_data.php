@@ -57,12 +57,18 @@ class wpcable_api_data {
 	public function prepare_queue() {
 		$queue = [];
 
+		/*
+
+		Profile comes from login API call, no need to do it again.
+
 		$queue[] = [
 			'task'  => 'profile',
 			'label' => 'User profile',
 			'page'  => 0,
 			'paged' => false,
 		];
+
+		*/
 		$queue[] = [
 			'task'  => 'transactions',
 			'label' => 'Transactions',
@@ -226,9 +232,8 @@ class wpcable_api_data {
 		$single_page = $this->api_calls->transactions_page( $page );
 
 		if ( 2 === $page ) {
-			update_option( 'wpcable_average', $single_page['average_task_size'] );
-			update_option( 'wpcable_balance', $single_page['balance'] );
-			update_option( 'wpcable_revenue', $single_page['revenue'] );
+			//wc_get_logger()->debug( print_r( $single_page, 1 ),  ['source' => 'Transactions page 2'] );
+			//update_option( 'wpcable_revenue', $single_page['revenue'] );
 		}
 
 		if ( empty( $single_page['transactions'] ) ) {
@@ -297,9 +302,6 @@ class wpcable_api_data {
 
 				// If we find a transaction that already exists, bail out and don't continue updating all the transactions
 				if ( $exists ) {
-					update_option( 'wpcable_average', $single_page['average_task_size'] );
-					update_option( 'wpcable_balance', $single_page['balance'] );
-					update_option( 'wpcable_revenue', $single_page['revenue'] );
 					return false;
 				}
 

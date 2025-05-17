@@ -90,6 +90,8 @@ class wpcable_api_calls {
 		unset( $account_details['auth_token']);
 		update_option( 'wpcable_account_details', $account_details );
 
+		update_option( 'wpcable_average', $account_details['stats']['avg_task_size'] );
+		update_option( 'wpcable_balance', $account_details['balance'] );
 	}
 
 	/**
