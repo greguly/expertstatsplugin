@@ -587,7 +587,7 @@ class wpcable_api_data {
 			return;
 		}
 
-		$new_amount = [
+		/*$new_amount = [
 			'task_id'               => $task_id,
 			'client_id'             => $client_id,
 			'credit_revenue_id'     => $credit[0]['id'],
@@ -600,6 +600,21 @@ class wpcable_api_data {
 			'debit_cost_amount'     => $debit[0]['amount'],
 			'debit_user_id'         => $debit[1]['id'],
 			'debit_user_amount'     => $debit[1]['amount'],
+		];*/
+
+		$new_amount = [
+			'task_id'               => $task_id,
+			'client_id'             => $client_id,
+			'credit_revenue_id'     => $task_id,
+			'credit_revenue_amount' => $credit,
+			'credit_fee_id'         => $task_id,
+			'credit_fee_amount'     => $credit,
+			'credit_user_id'        => $client_id,
+			'credit_user_amount'    => $credit,
+			'debit_cost_id'         => $task_id,
+			'debit_cost_amount'     => $debit,
+			'debit_user_id'         => $client_id,
+			'debit_user_amount'     => $debit,
 		];
 
 		$wpdb->replace( $this->tables['amounts'], $new_amount );
