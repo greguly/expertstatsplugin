@@ -59,7 +59,7 @@ class wpcable_clients {
 		  ON
 			' . $this->tables['transactions'] . '.task_ID = ' . $this->tables['amounts'] . ".task_ID
 		  WHERE
-				`description` = 'task_completion' OR `description` = 'partial_refund'
+				`description` = 'task_completion' or `description` = 'ad_hoc_expert_credit' OR `description` = 'partial_refund'
 			AND (dateadded BETWEEN '" . $firstdate . "' AND '" . $lastdate . "')
 		";
 
