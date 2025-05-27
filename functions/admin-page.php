@@ -547,7 +547,7 @@ function codeable_transactions_stats_cb() {
 															<td>
 																<a href="https://app.codeable.io/tasks/<?php echo( $tron['parent_task_id'] > 0 ? $tron['parent_task_id'] : $tron['task_id'] ); ?>/workroom"
 																   target="_blank">
-																	<?php echo ( $tron['task_title'] ? $tron['task_title'] : 'Subtask of: ' . $tron['parent_task_id'] ) . ' - ' . $tron['task_id']; ?>
+																	<?php echo $tron['task_title'] . ' - ' . $tron['task_id'] . ( $tron['parent_task_id'] !=  $tron['task_id'] ? '<br> Subtask of ' . $tron['parent_task_id'] : '' ); ?>
 																</a>
 															</td>
 															<td><?php echo $tron['dateadded']; ?></td>

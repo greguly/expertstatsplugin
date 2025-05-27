@@ -233,6 +233,7 @@ class wpcable_api_data {
 
 		if ( 2 === $page ) {
 			//wc_get_logger()->debug( print_r( $single_page, 1 ),  ['source' => 'Transactions page 2'] );
+			// TODO: find out revenue
 			//update_option( 'wpcable_revenue', $single_page['revenue'] );
 		}
 
@@ -273,22 +274,45 @@ class wpcable_api_data {
 
 				$exists = $check[0]->totalrows > 0;
 
-				$task_id = ( $tr['resources']['sub_task']['id'] ? $tr['resources']['sub_task']['id'] : $tr['resources']['project']['id'] );
+				// Is it an additional task?
+				if ( isset( $tr['resources']['sub_task'] ) ) { 
 
-				$new_tr = [
-					'id'             => $tr['id'],
+					$task_id = $tr['resources']['sub_task']['id'];
+
+					$new_tr = [
+						'id'             => $tr['id'],
+						'description'    => $tr['description'],
+						'dateadded'      => $tr['created_at'],
+						'fee_percentage' => $tr['fee_percentage'],
+						'fee_amount'     => $tr['fee_amount'],
+						'task_type'      => $tr['resources']['sub_task']['kind'],
+						'task_id'        => $tr['resources']['sub_task']['id'],
+						'task_title'     => $tr['resources']['sub_task']['title'],
+						'parent_task_id' => $tr['resources']['sub_task']['parent_task_id'],
+						'preferred'      => $tr['resources']['sub_task']['current_user_is_preferred_contractor'],
+						'client_id'      => $tr['resources']['client']['id'],
+						'last_sync'      => time(),
+					];
+
+				} else {
+
+					$task_id = $tr['resources']['project']['id'];
+
+					$new_tr = [
+						'id'             => $tr['id'],
 					'description'    => $tr['description'],
 					'dateadded'      => $tr['created_at'],
-					'fee_percentage' => $tr['fee_percentage'],
-					'fee_amount'     => $tr['fee_amount'],
-					'task_type'      => $tr['resources']['project']['kind'],
-					'task_id'        => $task_id,
-					'task_title'     => $tr['resources']['project']['title'],
-					'parent_task_id' => ( $tr['resources']['project']['parent_task_id'] > 0 ? ['resources']['project']['parent_task_id'] : 0 ),
-					'preferred'      => $tr['resources']['project']['current_user_is_preferred_contractor'],
-					'client_id'      => $tr['resources']['client']['id'],
-					'last_sync'      => time(),
-				];
+						'fee_percentage' => $tr['fee_percentage'],
+						'fee_amount'     => $tr['fee_amount'],
+						'task_type'      => $tr['resources']['project']['kind'],
+						'task_id'        => $tr['resources']['project']['id'],
+						'task_title'     => $tr['resources']['project']['title'],
+						'parent_task_id' => $tr['resources']['project']['parent_task_id'],
+						'preferred'      => $tr['resources']['project']['current_user_is_preferred_contractor'],
+						'client_id'      => $tr['resources']['client']['id'],
+						'last_sync'      => time(),
+					];
+				}
 
 				// the API is returning some blank rows, ensure we have a valid client_id.
 				if ( $new_tr['id'] && is_int( $new_tr['id'] ) ) {
